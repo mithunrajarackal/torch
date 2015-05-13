@@ -1,0 +1,43 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/flashlight"
+    tools:context="${relativePackage}.${activityClass}" >
+
+<ImageView
+    android:id="@+id/off"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignLeft="@+id/on"
+    android:layout_alignStart="@+id/on"
+    android:layout_alignParentBottom="true"
+    android:layout_marginBottom="24dp"
+    android:contentDescription="@string/off"
+    android:src="@drawable/off"
+     />
+
+<ImageView
+    android:id="@+id/on"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignParentTop="true"
+    android:layout_centerHorizontal="true"
+    android:layout_marginTop="14dp"
+    android:contentDescription="@string/on"
+    android:src="@drawable/on" 
+    />
+
+    <ImageButton
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:contentDescription="@string/button"
+        android:src="@drawable/button" 
+        android:onClick="lightTorch"
+        />
+
+</RelativeLayout>
