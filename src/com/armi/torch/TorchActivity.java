@@ -36,6 +36,9 @@ public class TorchActivity extends Activity {
 	    ImageButton b=new ImageButton(context);
 	    b=(ImageButton)findViewById(R.id.button);
 	    
+	    
+	    
+	    //comment
 	    float curBrightnessValue = 0;
 	    try {
 	    	if(context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH))
