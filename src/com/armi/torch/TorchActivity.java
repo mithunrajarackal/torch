@@ -38,7 +38,7 @@ public class TorchActivity extends Activity {
 	    
 	    
 	    
-	    //arun tomy comment
+	    //Test branch
 	    float curBrightnessValue = 0;
 	    try {
 	    	if(context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH))
