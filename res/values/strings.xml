@@ -3,7 +3,10 @@
 
     <string name="app_name">Torch</string>
     <string name="hello_world">Hello world!</string>
-	<string name="off">Off</string>
-	<string name="on">On</string>
-	<string name="button">Button</string>
+    <string name="off">Off</string>
+    <string name="on">On</string>
+    <string name="button">Button</string>
+    <string name="title_activity_white">WhiteActivity</string>
+    <string name="action_settings">Settings</string>
+
 </resources>

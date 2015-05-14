@@ -6,30 +6,6 @@
     android:background="@drawable/flashlight"
     tools:context="${relativePackage}.${activityClass}" >
 
-<ImageView
-    android:id="@+id/off"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_alignLeft="@+id/on"
-    android:layout_alignStart="@+id/on"
-    android:layout_alignParentBottom="true"
-    android:layout_marginBottom="24dp"
-    android:contentDescription="@string/off"
-    android:src="@drawable/off"
-    
-     />
-
-<ImageView
-    android:id="@+id/on"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_alignParentTop="true"
-    android:layout_centerHorizontal="true"
-    android:layout_marginTop="14dp"
-    android:contentDescription="@string/on"
-    android:src="@drawable/on" 
-    />
-
     <ImageButton
         android:id="@+id/ibutton"
         android:layout_width="wrap_content"
@@ -40,6 +16,52 @@
         android:clickable="true"
         android:src="@drawable/button" 
         android:onClick="lightTorch"
+        android:background="@null"
         />
+
+    <ImageView
+        android:id="@+id/off"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/on"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/on"
+        android:layout_marginBottom="22dp"
+        android:contentDescription="@string/off"
+        android:src="@drawable/off" />
+
+    <ImageView
+        android:id="@+id/on"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/ibutton"
+        android:layout_alignTop="@+id/off"
+        android:layout_marginRight="24dp"
+        android:contentDescription="@string/on"
+        android:src="@drawable/on" />
+
+<ImageView
+    android:id="@+id/flipfront"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignTop="@+id/flipback"
+    android:layout_marginRight="28dp"
+    android:layout_toLeftOf="@+id/ibutton"
+    android:background="@null"
+    android:contentDescription="@string/off"
+    android:src="@drawable/flip_torchfront"
+    android:onClick="TorchFlip" />
+
+<ImageView
+    android:id="@+id/flipback"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_above="@+id/ibutton"
+    android:layout_alignLeft="@+id/flipfront"
+    android:layout_marginBottom="36dp"
+    android:background="@null"
+    android:contentDescription="@string/off"
+    android:src="@drawable/flip_torchback"
+     android:onClick="TorchFlip" />
 
 </RelativeLayout>
