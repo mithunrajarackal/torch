@@ -32,12 +32,13 @@ public class TorchActivity extends Activity {
     Parameters p;
     ImageView v1,v2,f1,f2;
     CameraInfo camInfo;
+    Context context;
 	@SuppressLint("NewApi")
 	@SuppressWarnings("deprecation")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		Context context=this.getApplicationContext();
+		context=this.getApplicationContext();
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 	    getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, 
 	                            WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -68,8 +69,7 @@ public class TorchActivity extends Activity {
 	    v2.setVisibility(View.INVISIBLE);
 	    f1.setVisibility(View.VISIBLE);
 	    f2.setVisibility(View.INVISIBLE);
-	    cam=Camera.open(0);    
-		 p = cam.getParameters();
+	   
 	    if(context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH))
 		{
 			b.setClickable(true);	
@@ -114,12 +114,25 @@ public class TorchActivity extends Activity {
 	    if (keyCode == KeyEvent.KEYCODE_BACK ) {
 	    	v1.setVisibility(View.VISIBLE);
 		    v2.setVisibility(View.INVISIBLE);
+		    if(cam!=null)
 	    	cam.release();	
 	        // do something on back.
 	        //return true;
 	    }
-
 	    return super.onKeyDown(keyCode, event);
+	}
+	@SuppressWarnings("deprecation")
+	@Override
+	public void onPause() {
+	    super.onPause();  // Always call the superclass method first
+	    v1.setVisibility(View.VISIBLE);
+	    v2.setVisibility(View.INVISIBLE);
+	    // Release the Camera because we don't need it when paused
+	    // and other activities might need to use it.
+	    if (cam != null) {
+	        cam.release();
+	        cam= null;
+	    }
 	}
 	
 	//Light up the torch based on LED availability.If LED not found, screen will be used as torch.
@@ -130,95 +143,96 @@ public class TorchActivity extends Activity {
 	 {
 		if(flip==false)// if LED used is the back LED
 		{
-		 
-		 List<String> flashModes = p.getSupportedFlashModes();
-		if(flashModes.contains(Parameters.FLASH_MODE_TORCH)) //check if the flash mode contains torch mode.
+		if(click==false) //Current state is OFF
 		{
-	     if(click==false) //Current state is OFF
+		try
+		{
+		 cam=Camera.open(0);    
+		 p = cam.getParameters();
+		 List<String> flashModes = p.getSupportedFlashModes();
+		 if(flashModes.contains(Parameters.FLASH_MODE_TORCH)) //check if the flash mode contains torch mode.
 		 {
-			v1.setVisibility(View.INVISIBLE);
+	    	v1.setVisibility(View.INVISIBLE);
 		    v2.setVisibility(View.VISIBLE);
 			click=true;
-			
 			p.setFlashMode(Parameters.FLASH_MODE_TORCH);
     		cam.setParameters(p);
     		cam.startPreview();
+		 }
+		 else //if torch mode is not available light up the display in the new activity.
+		 {
+			cam.release();
+			 click=true;
+			 Intent intent=new Intent(TorchActivity.this,WhiteActivity.class);
+			 TorchActivity.this.startActivity(intent);
+		 }
+		}
+		catch(RuntimeException e)
+		{
+			Toast.makeText(context,"Camera is used by some other application.Please close that application and try again.", Toast.LENGTH_LONG).show();
+		}
 		}
 		else //Current state is ON
 		{
 			v1.setVisibility(View.VISIBLE);
 		    v2.setVisibility(View.INVISIBLE);
 			click=false;
-			cam.stopPreview();
+			if(cam!=null)
+			{
+			 cam.stopPreview();
+			 cam.release();
+			 cam=null;
+			}
     		
+		}	
 		}
-		}
-		else //if torch mode is not available light up the display in the new activity.
-		{
-			if(click==false)
-			{
-			 click=true;
-			 Intent intent=new Intent(TorchActivity.this,WhiteActivity.class);
-			 TorchActivity.this.startActivity(intent);
-			// v1.setVisibility(View.INVISIBLE);
-			 //v2.setVisibility(View.VISIBLE);
-			 //View view = this.getWindow().getDecorView();
-			 //view.setBackgroundColor(Color.WHITE);
-			 
-			}
-			else
-			{
-				click=false;
-				click=true;
-				v1.setVisibility(View.VISIBLE);
-				v2.setVisibility(View.INVISIBLE);
-			}
-		}
-	  }
 		else   //if the LED used is of secondary camera(Front camera)
 		{
-			
+		  if(click==false) //Current state is OFF
+		  {
+			try
+			{
+		    cam=Camera.open(1);    
+		    p = cam.getParameters();
+		    click=true;
 			List<String> flashModes = p.getSupportedFlashModes();
 			if(flashModes.contains(Parameters.FLASH_MODE_TORCH))
 			{
-		     if(click==false) //Current state is OFF
-			 {
-				v1.setVisibility(View.INVISIBLE);
+		    	v1.setVisibility(View.INVISIBLE);
 			    v2.setVisibility(View.VISIBLE);
-				click=true;
+				
+				
 				p.setFlashMode(Parameters.FLASH_MODE_TORCH);
 	    		cam.setParameters(p);
 	    		cam.startPreview();
 			}
-			else //Current state is ON
+			else
+			{
+			 cam.release();
+			 cam=null;
+			 Intent intent=new Intent(TorchActivity.this,WhiteActivity.class);
+			 TorchActivity.this.startActivity(intent);
+			}
+		  }
+			catch(RuntimeException e)
+			{
+				Toast.makeText(context,"Camera is used by some other application.Please close that application and try again.", Toast.LENGTH_LONG).show();
+			}
+		  }
+		  else //Current state is ON
 			{
 				v1.setVisibility(View.VISIBLE);
 			    v2.setVisibility(View.INVISIBLE);
 				click=false;
+				if(cam!=null)
+				{
 				cam.stopPreview();
+				cam.release();
+				cam=null;
+				}
 	    		
 			}
 		  }
-		 else //if LED not found
-		 {
-			 if(click==false) ////Current state is OFF
-			 {
-				click=true;
-				// v1.setVisibility(View.INVISIBLE);
-				  //  v2.setVisibility(View.VISIBLE);
-			 //View view = this.getWindow().getDecorView();
-			 //view.setBackgroundColor(Color.WHITE);
-				    Intent intent=new Intent(TorchActivity.this,WhiteActivity.class);
-				    TorchActivity.this.startActivity(intent);
-			 }
-			 else //Current state is ON
-			 {
-				 click=false;
-				 v1.setVisibility(View.VISIBLE);
-				 v2.setVisibility(View.INVISIBLE);
-			 }
-		 }
-	   }
 	 }
 	@SuppressLint("NewApi")
 	@SuppressWarnings("deprecation")
@@ -234,12 +248,17 @@ public class TorchActivity extends Activity {
 			 v1.setVisibility(View.VISIBLE);
 			    v2.setVisibility(View.INVISIBLE);
 				click=false;
+				if(cam!=null)
+				{
 				cam.stopPreview();
+				cam.release();
+				cam=null;
+				}
 				
 		 }
-		 cam.release();
-		 cam=Camera.open(1);
-		 p=cam.getParameters();
+		 //cam.release();
+		 //cam=Camera.open(1);
+		 //p=cam.getParameters();
 		}
 		else //Currently using Front LED
 		{
@@ -251,12 +270,17 @@ public class TorchActivity extends Activity {
 			    v1.setVisibility(View.VISIBLE);
 			    v2.setVisibility(View.INVISIBLE);
 				click=false;
+				if(cam!=null)
+				{
 				cam.stopPreview();
+				cam.release();
+				cam=null;
+				}
 				
 		 }
-		 cam.release();
-		 cam=Camera.open(0);
-		 p=cam.getParameters();
+		 //cam.release();
+		 //cam=Camera.open(0);
+		 //p=cam.getParameters();
 		}
 	}
 }

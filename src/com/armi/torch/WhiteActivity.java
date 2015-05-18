@@ -44,5 +44,10 @@ public class WhiteActivity extends Activity {
 
 	    return super.onKeyDown(keyCode, event);
 	}
+   	@Override
+   	public void onPause() {
+   	    super.onPause();  // Always call the superclass method first
+   	    Settings.System.putInt(getContentResolver(), android.provider.Settings.System.SCREEN_BRIGHTNESS, curBrightness); //restores the system brightness on home key press.
+   	}
 
 }
