@@ -169,7 +169,7 @@ public class TorchActivity extends Activity {
 		}
 		catch(RuntimeException e)
 		{
-			Toast.makeText(context,"Camera is used by some other application.Please close that application and try again.", Toast.LENGTH_LONG).show();
+			Toast.makeText(context,"Flash is used by some other application.Please close that application and try again.", Toast.LENGTH_LONG).show();
 		}
 		}
 		else //Current state is ON
@@ -216,7 +216,7 @@ public class TorchActivity extends Activity {
 		  }
 			catch(RuntimeException e)
 			{
-				Toast.makeText(context,"Camera is used by some other application.Please close that application and try again.", Toast.LENGTH_LONG).show();
+				Toast.makeText(context,"Flash is used by some other application.Please close that application and try again.", Toast.LENGTH_LONG).show();
 			}
 		  }
 		  else //Current state is ON

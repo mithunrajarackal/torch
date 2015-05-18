@@ -49,5 +49,9 @@ public class WhiteActivity extends Activity {
    	    super.onPause();  // Always call the superclass method first
    	    Settings.System.putInt(getContentResolver(), android.provider.Settings.System.SCREEN_BRIGHTNESS, curBrightness); //restores the system brightness on home key press.
    	}
+   	public void onResume() {
+   	    super.onPause();  // Always call the superclass method first
+   	    Settings.System.putInt(getContentResolver(), android.provider.Settings.System.SCREEN_BRIGHTNESS, 255); //restores the max brightness on resume.
+   	}
 
 }
