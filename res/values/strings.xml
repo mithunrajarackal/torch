@@ -8,5 +8,5 @@
     <string name="button">Button</string>
     <string name="title_activity_white">WhiteActivity</string>
     <string name="action_settings">Settings</string>
-
+	<string name="hint_msg">Press back button to Turn off the light</string>
 </resources>

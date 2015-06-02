@@ -3,7 +3,7 @@
     android:id="@+id/layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/flashlight"
+    android:background="@drawable/flashlight1"
     tools:context="${relativePackage}.${activityClass}" >
 
     <ImageButton
@@ -30,38 +30,35 @@
         android:contentDescription="@string/off"
         android:src="@drawable/off" />
 
-    <ImageView
-        android:id="@+id/on"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/ibutton"
-        android:layout_alignTop="@+id/off"
-        android:layout_marginRight="24dp"
-        android:contentDescription="@string/on"
-        android:src="@drawable/on" />
+<ImageView
+    android:id="@+id/on"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignTop="@+id/off"
+    android:layout_centerHorizontal="true"
+    android:contentDescription="@string/on"
+    android:src="@drawable/on" />
 
 <ImageView
     android:id="@+id/flipfront"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:layout_above="@+id/ibutton"
     android:layout_alignTop="@+id/flipback"
-    android:layout_marginRight="28dp"
-    android:layout_toLeftOf="@+id/ibutton"
     android:background="@null"
     android:contentDescription="@string/off"
-    android:src="@drawable/flip_torchfront"
-    android:onClick="TorchFlip" />
+    android:onClick="TorchFlip"
+    android:src="@drawable/front" />
 
 <ImageView
     android:id="@+id/flipback"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_above="@+id/ibutton"
-    android:layout_alignLeft="@+id/flipfront"
-    android:layout_marginBottom="36dp"
+    android:layout_centerHorizontal="true"
     android:background="@null"
     android:contentDescription="@string/off"
-    android:src="@drawable/flip_torchback"
-     android:onClick="TorchFlip" />
+    android:onClick="TorchFlip"
+    android:src="@drawable/back" />
 
 </RelativeLayout>
