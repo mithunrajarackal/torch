@@ -11,6 +11,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -28,10 +29,8 @@ public class WhiteActivity extends Activity {
 	    getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, 
 	                            WindowManager.LayoutParams.FLAG_FULLSCREEN); //display the screen without settings bars.(Full Screen)
 	    View view = this.getWindow().getDecorView();
-	   	view.setBackgroundColor(Color.WHITE); //sets background colour to white
+	   	view.setBackgroundColor(Color.WHITE); //sets background color to white
 	    setContentView(R.layout.activity_white);
-	    TextView txtView=(TextView) findViewById(R.id.textView1);
-	    txtView.setSelected(true);
 	    try {
 			curBrightness=Settings.System.getInt(getContentResolver(), Settings.System.SCREEN_BRIGHTNESS); //get the current display brightness
 			Settings.System.putInt(getContentResolver(), android.provider.Settings.System.SCREEN_BRIGHTNESS, 255); //sets the display brightness to 255 which is max.
@@ -61,6 +60,13 @@ public class WhiteActivity extends Activity {
    	public void onResume() {
    	    super.onPause();  // Always call the superclass method first
    	    Settings.System.putInt(getContentResolver(), android.provider.Settings.System.SCREEN_BRIGHTNESS, 255); //restores the max brightness on resume.
+   	}
+   	
+   	public void closeTorch(View v) {
+   		Settings.System.putInt(getContentResolver(), android.provider.Settings.System.SCREEN_BRIGHTNESS, curBrightness); //restores the system brightness on back key press.
+    	Intent intent = new Intent();
+    	setResult(RESULT_OK, intent);
+    	finish();
    	}
 
 }

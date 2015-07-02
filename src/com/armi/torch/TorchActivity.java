@@ -2,6 +2,8 @@ package com.armi.torch;
 
 import java.util.List;
 
+import android.animation.AnimatorInflater;
+import android.animation.AnimatorSet;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
@@ -36,6 +38,7 @@ public class TorchActivity extends Activity {
     Context context;
     boolean camer = true;
     int val = 0;
+    AnimatorSet set;
 	@SuppressLint("NewApi")
 	@SuppressWarnings("deprecation")
 	@Override
@@ -90,7 +93,9 @@ public class TorchActivity extends Activity {
 	@SuppressWarnings("deprecation")
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event)  {
+		RelativeLayout rl = (RelativeLayout) findViewById(R.id.layout);
 	    if (keyCode == KeyEvent.KEYCODE_BACK ) {
+	    	rl.setBackgroundResource(R.drawable.flashlight1);
 	    	v1.setVisibility(View.VISIBLE);
 		    v2.setVisibility(View.INVISIBLE);
 		    if(cam!=null)
@@ -104,10 +109,13 @@ public class TorchActivity extends Activity {
 	@Override
 	public void onPause() {
 	    super.onPause();  // Always call the superclass method first
+	    RelativeLayout rl = (RelativeLayout) findViewById(R.id.layout);
+	    click=false;
 	    v1.setVisibility(View.VISIBLE);
 	    v2.setVisibility(View.INVISIBLE);
 	    // Release the Camera because we don't need it when paused
 	    // and other activities might need to use it.
+	    rl.setBackgroundResource(R.drawable.flashlight1);
 	    if (cam != null) {
 	        cam.release();
 	        cam= null;
@@ -125,41 +133,45 @@ public class TorchActivity extends Activity {
 		{
 			if(click==false) //Current state is OFF
 			{
-				rl.setBackgroundResource(R.drawable.backlight2);
 				try
 				{
 					if(camer == true) {
+						rl.setBackgroundResource(R.drawable.backlight2);
 						cam=Camera.open(0);    
-						 p = cam.getParameters();
-						 List<String> flashModes = p.getSupportedFlashModes();
-						 if(flashModes.contains(Parameters.FLASH_MODE_TORCH)) //check if the flash mode contains torch mode.
-						 {
-					    	v1.setVisibility(View.INVISIBLE);
+						p = cam.getParameters();
+						List<String> flashModes = p.getSupportedFlashModes();
+						if(flashModes.contains(Parameters.FLASH_MODE_TORCH)) //check if the flash mode contains torch mode.
+						{
+							v1.setVisibility(View.INVISIBLE);
 						    v2.setVisibility(View.VISIBLE);
 							click=true;
 							p.setFlashMode(Parameters.FLASH_MODE_TORCH);
 				    		cam.setParameters(p);
 				    		cam.startPreview();
-						 }
-						 else //if torch mode is not available light up the display in the new activity.
-						 {
+						}
+						else //if torch mode is not available light up the display in the new activity.
+						{
 							cam.release();
-							 click=true;
-							 Intent intent=new Intent(TorchActivity.this,WhiteActivity.class);
-							 TorchActivity.this.startActivity(intent);
-						 }
+							click=true;
+							Intent intent=new Intent(TorchActivity.this,WhiteActivity.class);
+							TorchActivity.this.startActivity(intent);
+						}
 					}
-					 else //if torch mode is not available light up the display in the new activity.
-					 {
+					else //if torch mode is not available light up the display in the new activity.
+					{
 						//cam.release();
-						 click=true;
-						 Intent intent=new Intent(TorchActivity.this,WhiteActivity.class);
-						 TorchActivity.this.startActivityForResult(intent,val);
-					 }
+						click=true;
+						Intent intent=new Intent(TorchActivity.this,WhiteActivity.class);
+						TorchActivity.this.startActivityForResult(intent,val);
+					}
 				}
 				catch(RuntimeException e)
 				{
 					Toast.makeText(context,"Flash is used by some other application.Please close that application and try again.", Toast.LENGTH_LONG).show();
+					click=true;
+					Intent intent=new Intent(TorchActivity.this,WhiteActivity.class);
+					TorchActivity.this.startActivityForResult(intent,val);
+					
 				}
 			}
 			else //Current state is ON
@@ -215,6 +227,7 @@ public class TorchActivity extends Activity {
 			{
 				v1.setVisibility(View.VISIBLE);
 			    v2.setVisibility(View.INVISIBLE);
+			    rl.setBackgroundResource(R.drawable.flashlight1);
 				click=false;
 				if(cam!=null)
 				{

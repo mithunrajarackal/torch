@@ -1905,16 +1905,18 @@ containing a value of this type.
         public static final int backlight=0x7f02003c;
         public static final int backlight2=0x7f02003d;
         public static final int button=0x7f02003e;
-        public static final int flashlight=0x7f02003f;
-        public static final int flashlight1=0x7f020040;
-        public static final int flashlight2=0x7f020041;
-        public static final int flip_torchback=0x7f020042;
-        public static final int flip_torchfront=0x7f020043;
-        public static final int front=0x7f020044;
-        public static final int ic_launcher=0x7f020045;
-        public static final int mybutton=0x7f020046;
-        public static final int off=0x7f020047;
-        public static final int on=0x7f020048;
+        public static final int buttonback=0x7f02003f;
+        public static final int cancel=0x7f020040;
+        public static final int flashlight=0x7f020041;
+        public static final int flashlight1=0x7f020042;
+        public static final int flashlight2=0x7f020043;
+        public static final int flip_torchback=0x7f020044;
+        public static final int flip_torchfront=0x7f020045;
+        public static final int front=0x7f020046;
+        public static final int ic_launcher=0x7f020047;
+        public static final int mybutton=0x7f020048;
+        public static final int off=0x7f020049;
+        public static final int on=0x7f02004a;
     }
     public static final class id {
         public static final int action_bar=0x7f090040;
@@ -1958,6 +1960,7 @@ containing a value of this type.
         public static final int icon=0x7f09002b;
         public static final int ifRoom=0x7f09001b;
         public static final int image=0x7f090028;
+        public static final int jbutton=0x7f090055;
         public static final int layout=0x7f09004f;
         public static final int listMode=0x7f09000a;
         public static final int list_item=0x7f09002a;
@@ -1996,7 +1999,6 @@ containing a value of this type.
         public static final int submit_area=0x7f09004b;
         public static final int tabMode=0x7f09000c;
         public static final int textSpacerNoButtons=0x7f090033;
-        public static final int textView1=0x7f090055;
         public static final int title=0x7f09002c;
         public static final int title_template=0x7f09002f;
         public static final int topPanel=0x7f09002e;
