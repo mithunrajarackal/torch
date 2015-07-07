@@ -171,7 +171,6 @@ public class TorchActivity extends Activity {
 					click=true;
 					Intent intent=new Intent(TorchActivity.this,WhiteActivity.class);
 					TorchActivity.this.startActivityForResult(intent,val);
-					
 				}
 			}
 			else //Current state is ON
@@ -212,14 +211,18 @@ public class TorchActivity extends Activity {
 					}
 					else
 					{
-					 cam.release();
-					 cam=null;
-					 Intent intent=new Intent(TorchActivity.this,WhiteActivity.class);
-					 TorchActivity.this.startActivityForResult(intent,val);
+						cam.release();
+						cam=null;
+						Intent intent=new Intent(TorchActivity.this,WhiteActivity.class);
+						TorchActivity.this.startActivityForResult(intent,val);
 					}
 				}
 				catch(RuntimeException e)
 				{
+					cam=null;
+					click = true;
+					Intent intent=new Intent(TorchActivity.this,WhiteActivity.class);
+					TorchActivity.this.startActivityForResult(intent,val);
 					Toast.makeText(context,"Flash is used by some other application.Please close that application and try again.", Toast.LENGTH_LONG).show();
 				}
 			}
