@@ -2,23 +2,16 @@ package com.armi.torch;
 
 import java.util.List;
 
-import android.animation.AnimatorInflater;
 import android.animation.AnimatorSet;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
 import android.hardware.Camera;
 import android.hardware.Camera.CameraInfo;
 import android.hardware.Camera.Parameters;
-import android.hardware.camera2.CameraAccessException;
-import android.hardware.camera2.CameraManager;
 import android.os.Bundle;
-import android.provider.Settings;
-import android.provider.Settings.SettingNotFoundException;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
@@ -29,7 +22,6 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 public class TorchActivity extends Activity {
-	@SuppressWarnings("deprecation")
 	boolean click=false,flip=false;
     Camera cam;
     Parameters p;
@@ -48,23 +40,9 @@ public class TorchActivity extends Activity {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 	    getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, 
 	                            WindowManager.LayoutParams.FLAG_FULLSCREEN);
-	  //  View view = this.getWindow().getDecorView();
-	   // view.setBackgroundColor(Color.WHITE);
-	    //setContentView(R.layout.);
 	    setContentView(R.layout.activity_torch);
 	    camInfo=new CameraInfo();
-	    int currentapiVersion = android.os.Build.VERSION.SDK_INT;
-	   /* if(currentapiVersion>android.os.Build.VERSION_CODES.LOLLIPOP)
-	    {
-	    	CameraManager manager = (CameraManager) this.getSystemService(Context.CAMERA_SERVICE);
-			try {
-				String[] camList=manager.getCameraIdList();
-			} catch (CameraAccessException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-	    }*/
-	    	
+	     	
 	    ImageButton b;
 	    b=(ImageButton)findViewById(R.id.ibutton);
 	    b.setClickable(false);
@@ -72,7 +50,7 @@ public class TorchActivity extends Activity {
 	    v2=(ImageView)findViewById(R.id.on);
 	    f1=(ImageView)findViewById(R.id.flipfront);
 	    f2=(ImageView)findViewById(R.id.flipback);
-	    v1.setVisibility(View.VISIBLE);
+	    v1.setVisibility(View.INVISIBLE);
 	    v2.setVisibility(View.INVISIBLE);
 	    f1.setVisibility(View.VISIBLE);
 	    f2.setVisibility(View.INVISIBLE);
@@ -96,7 +74,7 @@ public class TorchActivity extends Activity {
 		RelativeLayout rl = (RelativeLayout) findViewById(R.id.layout);
 	    if (keyCode == KeyEvent.KEYCODE_BACK ) {
 	    	rl.setBackgroundResource(R.drawable.flashlight1);
-	    	v1.setVisibility(View.VISIBLE);
+	    	v1.setVisibility(View.INVISIBLE);
 		    v2.setVisibility(View.INVISIBLE);
 		    if(cam!=null)
 	    	cam.release();	
@@ -111,7 +89,7 @@ public class TorchActivity extends Activity {
 	    super.onPause();  // Always call the superclass method first
 	    RelativeLayout rl = (RelativeLayout) findViewById(R.id.layout);
 	    click=false;
-	    v1.setVisibility(View.VISIBLE);
+	    v1.setVisibility(View.INVISIBLE);
 	    v2.setVisibility(View.INVISIBLE);
 	    // Release the Camera because we don't need it when paused
 	    // and other activities might need to use it.
@@ -143,7 +121,7 @@ public class TorchActivity extends Activity {
 						if(flashModes.contains(Parameters.FLASH_MODE_TORCH)) //check if the flash mode contains torch mode.
 						{
 							v1.setVisibility(View.INVISIBLE);
-						    v2.setVisibility(View.VISIBLE);
+						    v2.setVisibility(View.INVISIBLE);
 							click=true;
 							p.setFlashMode(Parameters.FLASH_MODE_TORCH);
 				    		cam.setParameters(p);
@@ -176,7 +154,7 @@ public class TorchActivity extends Activity {
 			else //Current state is ON
 			{
 				rl.setBackgroundResource(R.drawable.flashlight1);
-				v1.setVisibility(View.VISIBLE);
+				v1.setVisibility(View.INVISIBLE);
 			    v2.setVisibility(View.INVISIBLE);
 				click=false;
 				if(cam!=null)
@@ -202,7 +180,7 @@ public class TorchActivity extends Activity {
 					if(flashModes.contains(Parameters.FLASH_MODE_TORCH))
 					{
 				    	v1.setVisibility(View.INVISIBLE);
-					    v2.setVisibility(View.VISIBLE);
+					    v2.setVisibility(View.INVISIBLE);
 						
 						
 						p.setFlashMode(Parameters.FLASH_MODE_TORCH);
@@ -219,16 +197,18 @@ public class TorchActivity extends Activity {
 				}
 				catch(RuntimeException e)
 				{
+					if(cam!=null)
+					cam.release();
 					cam=null;
 					click = true;
 					Intent intent=new Intent(TorchActivity.this,WhiteActivity.class);
 					TorchActivity.this.startActivityForResult(intent,val);
-					Toast.makeText(context,"Flash is used by some other application.Please close that application and try again.", Toast.LENGTH_LONG).show();
+					//Toast.makeText(context,"Flash is used by some other application.Please close that application and try again.", Toast.LENGTH_LONG).show();
 				}
 			}
 			else //Current state is ON
 			{
-				v1.setVisibility(View.VISIBLE);
+				v1.setVisibility(View.INVISIBLE);
 			    v2.setVisibility(View.INVISIBLE);
 			    rl.setBackgroundResource(R.drawable.flashlight1);
 				click=false;
@@ -254,7 +234,7 @@ public class TorchActivity extends Activity {
 			if(click==true) //Current state is ON
 			{
 				rl.setBackgroundResource(R.drawable.flashlight1);
-				v1.setVisibility(View.VISIBLE);
+				v1.setVisibility(View.INVISIBLE);
 			    v2.setVisibility(View.INVISIBLE);
 				click=false;
 				if(cam!=null)
@@ -276,7 +256,7 @@ public class TorchActivity extends Activity {
 			if(click==true) //Current state is ON
 			{
 				rl.setBackgroundResource(R.drawable.flashlight1);
-				v1.setVisibility(View.VISIBLE);
+				v1.setVisibility(View.INVISIBLE);
 				v2.setVisibility(View.INVISIBLE);
 				click=false;
 				if(cam!=null)
