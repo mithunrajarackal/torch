@@ -25,7 +25,7 @@ public class TorchActivity extends Activity {
 	boolean click=false,flip=false;
     Camera cam;
     Parameters p;
-    ImageView v1,v2,f1,f2;
+    ImageView f1,f2;
     CameraInfo camInfo;
     Context context;
     boolean camer = true;
@@ -46,12 +46,8 @@ public class TorchActivity extends Activity {
 	    ImageButton b;
 	    b=(ImageButton)findViewById(R.id.ibutton);
 	    b.setClickable(false);
-	    v1=(ImageView)findViewById(R.id.off);
-	    v2=(ImageView)findViewById(R.id.on);
 	    f1=(ImageView)findViewById(R.id.flipfront);
 	    f2=(ImageView)findViewById(R.id.flipback);
-	    v1.setVisibility(View.INVISIBLE);
-	    v2.setVisibility(View.INVISIBLE);
 	    f1.setVisibility(View.VISIBLE);
 	    f2.setVisibility(View.INVISIBLE);
 	   
@@ -74,9 +70,7 @@ public class TorchActivity extends Activity {
 		RelativeLayout rl = (RelativeLayout) findViewById(R.id.layout);
 	    if (keyCode == KeyEvent.KEYCODE_BACK ) {
 	    	rl.setBackgroundResource(R.drawable.flashlight1);
-	    	v1.setVisibility(View.INVISIBLE);
-		    v2.setVisibility(View.INVISIBLE);
-		    if(cam!=null)
+	    	if(cam!=null)
 	    	cam.release();	
 	        // do something on back.
 	        //return true;
@@ -89,8 +83,6 @@ public class TorchActivity extends Activity {
 	    super.onPause();  // Always call the superclass method first
 	    RelativeLayout rl = (RelativeLayout) findViewById(R.id.layout);
 	    click=false;
-	    v1.setVisibility(View.INVISIBLE);
-	    v2.setVisibility(View.INVISIBLE);
 	    // Release the Camera because we don't need it when paused
 	    // and other activities might need to use it.
 	    rl.setBackgroundResource(R.drawable.flashlight1);
@@ -120,8 +112,6 @@ public class TorchActivity extends Activity {
 						List<String> flashModes = p.getSupportedFlashModes();
 						if(flashModes.contains(Parameters.FLASH_MODE_TORCH)) //check if the flash mode contains torch mode.
 						{
-							v1.setVisibility(View.INVISIBLE);
-						    v2.setVisibility(View.INVISIBLE);
 							click=true;
 							p.setFlashMode(Parameters.FLASH_MODE_TORCH);
 				    		cam.setParameters(p);
@@ -154,8 +144,6 @@ public class TorchActivity extends Activity {
 			else //Current state is ON
 			{
 				rl.setBackgroundResource(R.drawable.flashlight1);
-				v1.setVisibility(View.INVISIBLE);
-			    v2.setVisibility(View.INVISIBLE);
 				click=false;
 				if(cam!=null)
 				{
@@ -179,10 +167,7 @@ public class TorchActivity extends Activity {
 					List<String> flashModes = p.getSupportedFlashModes();
 					if(flashModes.contains(Parameters.FLASH_MODE_TORCH))
 					{
-				    	v1.setVisibility(View.INVISIBLE);
-					    v2.setVisibility(View.INVISIBLE);
-						
-						
+				    	
 						p.setFlashMode(Parameters.FLASH_MODE_TORCH);
 			    		cam.setParameters(p);
 			    		cam.startPreview();
@@ -208,9 +193,7 @@ public class TorchActivity extends Activity {
 			}
 			else //Current state is ON
 			{
-				v1.setVisibility(View.INVISIBLE);
-			    v2.setVisibility(View.INVISIBLE);
-			    rl.setBackgroundResource(R.drawable.flashlight1);
+				rl.setBackgroundResource(R.drawable.flashlight1);
 				click=false;
 				if(cam!=null)
 				{
@@ -234,8 +217,6 @@ public class TorchActivity extends Activity {
 			if(click==true) //Current state is ON
 			{
 				rl.setBackgroundResource(R.drawable.flashlight1);
-				v1.setVisibility(View.INVISIBLE);
-			    v2.setVisibility(View.INVISIBLE);
 				click=false;
 				if(cam!=null)
 				{
@@ -244,9 +225,6 @@ public class TorchActivity extends Activity {
 					cam=null;
 				}				
 			}
-			 //cam.release();
-			 //cam=Camera.open(1);
-			 //p=cam.getParameters();
 		}
 		else //Currently using Front LED
 		{
@@ -256,8 +234,6 @@ public class TorchActivity extends Activity {
 			if(click==true) //Current state is ON
 			{
 				rl.setBackgroundResource(R.drawable.flashlight1);
-				v1.setVisibility(View.INVISIBLE);
-				v2.setVisibility(View.INVISIBLE);
 				click=false;
 				if(cam!=null)
 				{
@@ -266,9 +242,6 @@ public class TorchActivity extends Activity {
 					cam=null;
 				}				
 			}
-			//cam.release();
-			//cam=Camera.open(0);
-			//p=cam.getParameters();
 		}
 	}
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {

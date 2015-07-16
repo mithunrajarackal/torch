@@ -16,7 +16,7 @@
         android:layout_centerVertical="true"
         android:contentDescription="@string/button"
         android:clickable="true"
-        android:src="@drawable/button" 
+        android:src="@drawable/cancel" 
         android:onClick="closeTorch"
         android:background="@null"
         />
