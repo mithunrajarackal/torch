@@ -71,7 +71,12 @@ public class TorchActivity extends Activity {
 	    if (keyCode == KeyEvent.KEYCODE_BACK ) {
 	    	rl.setBackgroundResource(R.drawable.flashlight1);
 	    	if(cam!=null)
-	    	cam.release();	
+	    	{
+	    	 p.setFlashMode(Parameters.FLASH_MODE_OFF);
+	    	 cam.setParameters(p);
+	    	 cam.stopPreview();
+	    	 //cam.release();
+	    	}
 	        // do something on back.
 	        //return true;
 	    }
@@ -87,7 +92,10 @@ public class TorchActivity extends Activity {
 	    // and other activities might need to use it.
 	    rl.setBackgroundResource(R.drawable.flashlight1);
 	    if (cam != null) {
-	        cam.release();
+	    	p.setFlashMode(Parameters.FLASH_MODE_OFF);
+	    	cam.setParameters(p);
+	    	cam.stopPreview();
+	    	cam.release();
 	        cam= null;
 	    }
 	}
@@ -147,6 +155,8 @@ public class TorchActivity extends Activity {
 				click=false;
 				if(cam!=null)
 				{
+					p.setFlashMode(Parameters.FLASH_MODE_OFF);
+					cam.setParameters(p);
 					cam.stopPreview();
 					cam.release();
 					cam=null;
@@ -197,6 +207,8 @@ public class TorchActivity extends Activity {
 				click=false;
 				if(cam!=null)
 				{
+					p.setFlashMode(Parameters.FLASH_MODE_OFF);
+					cam.setParameters(p);
 					cam.stopPreview();
 					cam.release();
 					cam=null;
@@ -220,6 +232,8 @@ public class TorchActivity extends Activity {
 				click=false;
 				if(cam!=null)
 				{
+					p.setFlashMode(Parameters.FLASH_MODE_OFF);
+					cam.setParameters(p);
 					cam.stopPreview();
 					cam.release();
 					cam=null;
@@ -237,6 +251,8 @@ public class TorchActivity extends Activity {
 				click=false;
 				if(cam!=null)
 				{
+					p.setFlashMode(Parameters.FLASH_MODE_OFF);
+					cam.setParameters(p);
 					cam.stopPreview();
 					cam.release();
 					cam=null;
